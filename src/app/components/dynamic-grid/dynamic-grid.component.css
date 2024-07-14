@@ -1,0 +1,6 @@
+.table th {
+  cursor: pointer;
+}
+.table th span {
+  margin-left: 5px;
+}

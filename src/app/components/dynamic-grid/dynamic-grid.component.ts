@@ -11,4 +11,6 @@ import { CommonModule } from '@angular/common';
 export class DynamicGridComponent {
   @Input() headers: string[] = [];
   @Input() data: any[] = [];
+
+ 
 }
