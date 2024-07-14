@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
 
-  Headers: string[] = ['id', 'status', 'complain_provider' ,'mangement','for','title','IsSelected'];
+  Headers: string[] = ['id', 'status', 'complain_provider' ,'mangement','for','title'];
   Tickets: any[] = [
     { id: 1,status:"normal", complain_provider:"yasmine" ,mangement:"technical support" ,for:"ahmed" ,title: "Title ",  IsSelected: false },
     { id: 2,status:"normal", complain_provider:"yasmine" ,mangement:"technical support" ,for:"ahmed" ,title: "Title ",  IsSelected: false },
