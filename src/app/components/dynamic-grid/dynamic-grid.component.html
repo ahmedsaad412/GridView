@@ -13,7 +13,7 @@
               <td *ngFor="let header of headers">{{ item[header] }}</td>
               <td>
                 <div class="d-flex gap-2">
-                  <a class="btn btn-sm btn-warning" (click)="enterEditMode(i)"  >
+                  <a class="btn btn-sm btn-warning" (click)="editModeEntered(i)"  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -45,6 +45,7 @@
                   <button
 
                   class="btn btn-sm btn-danger ml-2"
+                  (click)="deleteRow(paginatedData[i])"
 
                 >
                   <svg
@@ -90,7 +91,7 @@
               </td>
               <td>
                 <div class="d-flex gap-2">
-                  <button class="btn btn-sm btn-success" (click)="saveRow(i)">Save</button>
+                  <button class="btn btn-sm btn-success" (click)="saveRow(i ,paginatedData[i])">Save</button>
                   <button class="btn btn-sm btn-secondary" (click)="cancelEdit(i)">Cancel</button>
                 </div>
               </td>

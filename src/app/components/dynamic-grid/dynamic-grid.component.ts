@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SortingService } from '../../../core/sorting.service';
 import { RouterModule } from '@angular/router';
@@ -14,8 +14,10 @@ import { FormsModule } from '@angular/forms';
 export class DynamicGridComponent implements OnChanges {
   @Input() headers: string[] = [];
   @Input() data: any[] = [];
+  @Output() saveData: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteData: EventEmitter<any> = new EventEmitter<any>();
   editingRowIndex: number = -1;
-  originalData: any[] = [];
+  shallowCopy: any[] = [];
   constructor(private sortingService: SortingService) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -48,21 +50,26 @@ previousPage() {
 sortBy(field: string) {
   this.sortingService.sortBy( field , this.data);
 }
-enterEditMode(index: number) {
+editModeEntered(index: number) {
   this.editingRowIndex = index;
   // Make a copy of the original data for rollback if needed
-  this.originalData[index] = { ...this.data[index] };
+  this.shallowCopy[index] = { ...this.data[index] };
 }
 
-saveRow(index: number) {
-  // Implement saving logic, e.g., update backend or confirm changes
-  this.editingRowIndex = -1; // Exit edit mode
+saveRow(index: number ,a :any) {
+  this.saveData.emit(this.data[index]);
+  this.editingRowIndex = -1;
 }
 
 cancelEdit(index: number) {
   // Restore original data
-  this.data[index] = { ...this.originalData[index] };
-  this.editingRowIndex = -1; // Exit edit mode
+  this.data[index] = { ...this.shallowCopy[index] };
+  this.editingRowIndex = -1;
+}
+deleteRow(row :any){
+  console.log('row' +JSON.stringify(row));
+  console.log('row id' +JSON.stringify(row.id));
+  this.deleteData.emit(row.id);
 }
 }
 

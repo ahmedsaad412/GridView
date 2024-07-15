@@ -29,10 +29,23 @@ export class AppComponent {
     { id: 14,status:"normal", complain_provider:"omar" ,   mangement:".NET" ,for:"Mona" , title: "Title ", IsSelected: false },
     { id: 15,status:"normal", complain_provider:"omar" ,   mangement:"echnical support" ,for:"Mona" , title: "Title ", IsSelected: false },
   ];
+  handleSaveData(updatedData: any) {
 
+    this.Tickets.map(a=>{
+      if(a.id==updatedData.id){
+        return updatedData
+      }
+      return a;
+    });
+  }
+  handleDeleteData(id :any){
+      this.Tickets= this.Tickets.filter(ticket => ticket.id !== id);
 
+  // this.Tickets.splice(this.Tickets.findIndex(a => a.id ===id) , 1)
+  }
 }
-
 
 {
 }
+
+
