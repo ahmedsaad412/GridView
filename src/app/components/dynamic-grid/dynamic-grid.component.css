@@ -1,8 +1,15 @@
 .table th {
   cursor: pointer;
 }
+#Tickets thead tr th {
+  background-color: #198754;
+  color: #fff;
+}
 .table th span {
   margin-left: 5px;
+}
+th.sorted {
+  background-color: #f0f0f0;
 }
 i {
   margin: 5px;
