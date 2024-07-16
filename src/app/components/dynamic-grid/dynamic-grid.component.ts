@@ -16,6 +16,9 @@ export class DynamicGridComponent implements OnChanges {
   @Input() data: any[] = [];
   @Output() saveData: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteData: EventEmitter<any> = new EventEmitter<any>();
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalPages:number =this.data.length;
   editingRowIndex: number = -1;
   shallowCopy: any[] = [];
   constructor(private sortingService: SortingService) {}
@@ -26,10 +29,12 @@ export class DynamicGridComponent implements OnChanges {
       this.currentPage = 1;
     }
   }
+  //////sorting
+  sortBy(field: string) {
+    this.sortingService.sortBy( field , this.data);
+  }
 
-currentPage: number = 1;
-pageSize: number = 10;
-totalPages:number =this.data.length;
+//////pagination //retrive subset from data []
 get paginatedData() {
   const startIndex = (this.currentPage - 1) * this.pageSize;
   return this.data.slice(startIndex, startIndex + this.pageSize);
@@ -47,28 +52,23 @@ previousPage() {
   }
 }
 
-sortBy(field: string) {
-  this.sortingService.sortBy( field , this.data);
-}
+
+////////// editing
 editModeEntered(index: number) {
   this.editingRowIndex = index;
-  // Make a copy of the original data for rollback if needed
   this.shallowCopy[index] = { ...this.data[index] };
 }
-
 saveRow(index: number ,a :any) {
   this.saveData.emit(this.data[index]);
   this.editingRowIndex = -1;
 }
-
 cancelEdit(index: number) {
-  // Restore original data
   this.data[index] = { ...this.shallowCopy[index] };
   this.editingRowIndex = -1;
 }
+
+///////////deleting
 deleteRow(row :any){
-  console.log('row' +JSON.stringify(row));
-  console.log('row id' +JSON.stringify(row.id));
   this.deleteData.emit(row.id);
 }
 }
